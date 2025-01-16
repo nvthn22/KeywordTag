@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    flex-direction: row;
+}
+
+.keyword-input {
+    flex-grow: 1;
+
+    input {
+        padding: 8px 12px !important;
+    }
+}
+
+.add-button {
+    height: 40px;
+    min-width: 100px !important;
+    margin-left: 20px !important;
+    box-shadow: 1px 1px 0px 1px #eee;
+}

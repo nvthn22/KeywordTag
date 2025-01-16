@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.line-item {
+    display: flex;
+    width: 400px;
+    justify-content: space-between;
+}
+
+.text-field {
+    width: 300px;
+    flex-grow: 1;
+}
+
+.link-button {
+    margin-left: 20px;
+    margin-bottom: 24px!important;
+    min-width: 100px;
+}
+
+.button {
+    width: 100%;
+    min-height: 56px;
+}

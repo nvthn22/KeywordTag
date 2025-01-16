@@ -1,0 +1,4 @@
+dotnet ef migrations add Initial
+dotnet ef database update
+
+run all views table files

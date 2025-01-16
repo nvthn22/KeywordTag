@@ -1,0 +1,6 @@
+@KeywordTag.ApiService.Business_HostAddress = http://localhost:5062
+
+GET {{KeywordTag.ApiService.Business_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
