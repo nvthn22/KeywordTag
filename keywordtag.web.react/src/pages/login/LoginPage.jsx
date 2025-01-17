@@ -1,4 +1,4 @@
-﻿import { useState } from 'react';
+﻿import { useState, useRef } from 'react';
 import { useNavigate } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -7,23 +7,29 @@ import Stack from '@mui/material/Stack';
 import styles from './LoginPage.module.scss'
 import GetPincode from '../../api/login/GetPincode.api'
 import Login from '../../api/login/Login.api'
+import { Initial } from '../../stores/Applocal'
+import { saveUserStatus } from '../../stores/Applocal'
+import {
+    updateLoginStatus,
+    updateUserEmail,
+} from '../../stores/slices/AppSlide'
+import { useDispatch, useSelector } from 'react-redux'
+
 
 function LoginPage(props) {
-    const [email, setEmail] = useState("");
-    const [pin, setPin] = useState("");
+    Initial();
+
+    const dispatch = useDispatch();
     const [pinMessage, setPinMessage] = useState(" ");
     const [loginDisabled, setLoginDisabled] = useState(true);
     const navigate = useNavigate();
 
-    const onEmailChange = ($event) => {
-        setEmail($event.currentTarget.value)
-    }
-
-    const onPinChange = ($event) => {
-        setPin($event.currentTarget.value)
-    }
+    const refEmail = useRef();
+    const refPin = useRef();
 
     const onGetPinClick = ($event) => {
+        const emailValue = refEmail.current.value;
+        dispatch(updateUserEmail(emailValue))
         GetPincode({
             email: email,
         }).then(result => {
@@ -35,18 +41,29 @@ function LoginPage(props) {
     }
 
     const onLoginClick = ($event) => {
-        console.log("email", email);
-        console.log("pin", pin);
+        const email = refEmail.current.value;
+        const pin = refPin.current.value;
         Login({
             email: email,
             pin: pin,
         }).then(result => {
             if (result.data.code === 200) {
+                var userLocal = {
+                    email: email,
+                    id: result.data.value.id,
+                    listKeywords: result.data.value.list_keyword,
+                    listKeywordsTag: result.data.value.list_keyword_tagged,
+                }
+                saveUserStatus(userLocal);
+                dispatch(updateLoginStatus(userLocal));
                 navigate('/main')
+            } else {
+                setPinMessage(result.data.message);
             }
-            console.log("result", result);
         });
     }
+
+    const email = useSelector(state => state.app.user.email);
 
     return (
         <>
@@ -56,7 +73,9 @@ function LoginPage(props) {
                         className={styles["text-field"]}
                         label="Email"
                         variant="outlined"
-                        onChange={onEmailChange} />
+                        inputRef={refEmail}
+                        value={email}
+                    />
                 </div>
 
                 <div className={styles["line-item"]}>
@@ -65,7 +84,8 @@ function LoginPage(props) {
                         label="Pin"
                         variant="outlined"
                         helperText={pinMessage}
-                        onChange={onPinChange} />
+                        inputRef={refPin}
+                    />
 
                     <Link
                         className={styles["link-button"]}

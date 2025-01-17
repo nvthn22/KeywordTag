@@ -13,6 +13,13 @@ const appSlice = createSlice({
         },
         updateMyKeywords: (state, action) => {
             state.keyword.list = action.payload;
+        },
+
+        updateUserEmail: (state, action) => {
+            state.user.email = action.payload
+        },
+        updateLoginStatus: (state, action) => {
+            state.user = action.payload;
         }
     }
 })
@@ -21,6 +28,8 @@ export const {
     updateTopKeyword,
     updateListMessage,
     updateMyKeywords,
+    updateLoginStatus,
+    updateUserEmail,
 } = appSlice.actions;
 
 export default appSlice.reducer;

@@ -43,8 +43,9 @@ function KeywordPage(props) {
     }, [])
     // End tải messages
 
-    // Tải keyword
+    // Tải keyword của người dùng
     useEffect(() => {
+
         const messages = [{
             code: "1",
             name: "abc 1",

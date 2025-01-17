@@ -2,6 +2,6 @@
 {
     public static class LoginExMessages
     {
-        public const string WrongPin = "Wrong pin number";
+        public const string WrongPin = "Sai mã pin";
     }
 }

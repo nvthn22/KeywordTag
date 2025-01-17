@@ -2,6 +2,9 @@ const AppState = {
     user: {
         email: "",
         id: null,
+        logged: false,
+        listKeywords: "",
+        listKeywordsTag: "",
     },
     keyword: {
         top: [],
@@ -18,4 +21,4 @@ const AppState = {
     test: "test 123"
 }
 
-export { AppState };
+export { AppState }
