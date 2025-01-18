@@ -33,9 +33,10 @@ builder.Services.AddCors(options =>
 builder.Services.AddScoped<GetPincodeAction>();
 builder.Services.AddScoped<LoginAction>();
 builder.Services.AddScoped<CheckinAction>();
-builder.Services.AddScoped<GetKeywordAction>();
+builder.Services.AddScoped<AddKeywordAction>();
 builder.Services.AddScoped<GetMessagesAction>();
-builder.Services.AddScoped<GetTopKeywordAction>();
+builder.Services.AddScoped<GetTopKeywordsAction>();
+builder.Services.AddScoped<GetUserKeywordsAction>();
 builder.Services.AddScoped<TagAction>();
 
 builder.Services.AddControllers();

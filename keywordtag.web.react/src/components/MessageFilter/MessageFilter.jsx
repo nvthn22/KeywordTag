@@ -7,7 +7,7 @@ import GetMessages from '../../api/message/GetMessages.api'
 
 import {
     updateListMessage,
-} from '../../stores/slices/AppSlide'
+} from '../../stores/slices/AppSlice'
 
 function MessageFilter(props) {
     const dispatch = useDispatch();

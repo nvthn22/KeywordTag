@@ -1,8 +1,8 @@
 import { host } from '../hostvariables'
 import axios from 'axios'
 
-export default async function GetTopKeyword() {
-    const url = host + "/keyword/gettopkeyword";
+export default async function GetTopKeywords() {
+    const url = host + "/keyword/gettopkeywords";
     const response = axios({
         method: "get",
         url: url,

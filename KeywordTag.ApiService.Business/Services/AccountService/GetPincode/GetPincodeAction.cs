@@ -32,6 +32,7 @@ namespace KeywordTag.ApiService.Business.Services.AccountService.GetPincode
                 };
 
                 KeywordTagDB.Devices.Add(device);
+                KeywordTagDB.SaveChanges();
             }
 
             var result = new WrapResult()

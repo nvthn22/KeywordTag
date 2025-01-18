@@ -1,8 +1,8 @@
 ﻿namespace KeywordTag.ApiService.Business.Services.KeywordService.GetKeyword
 {
-    public class GetKeywordInput
+    public class AddKeywordInput
     {
-        public Guid DevicedId { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
     }
 }

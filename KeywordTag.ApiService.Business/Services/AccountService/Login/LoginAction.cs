@@ -22,16 +22,12 @@ namespace KeywordTag.ApiService.Business.Services.AccountService.Login
             var device = KeywordTagDB.Devices.Find(input.Email);
             if (device == null)
             {
-                device = new Device
+                var nodevice = new WrapResult
                 {
-                    code = Guid.NewGuid(),
-                    email = input.Email,
-                    email_pin = 123,
-                    list_keyword = ";",
-                    list_keyword_tagged = ";",
+                    Code = HttpStatusCode.NotFound,
+                    Message = DeviceExMessages.DeviceNotFound
                 };
-
-                KeywordTagDB.Devices.Add(device);
+                return nodevice;
             }
 
             if (input.Pin == device.email_pin)

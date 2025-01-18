@@ -7,18 +7,15 @@ import Stack from '@mui/material/Stack';
 import styles from './LoginPage.module.scss'
 import GetPincode from '../../api/login/GetPincode.api'
 import Login from '../../api/login/Login.api'
-import { Initial } from '../../stores/Applocal'
 import { saveUserStatus } from '../../stores/Applocal'
 import {
     updateLoginStatus,
     updateUserEmail,
-} from '../../stores/slices/AppSlide'
+} from '../../stores/slices/AppSlice'
 import { useDispatch, useSelector } from 'react-redux'
 
 
 function LoginPage(props) {
-    Initial();
-
     const dispatch = useDispatch();
     const [pinMessage, setPinMessage] = useState(" ");
     const [loginDisabled, setLoginDisabled] = useState(true);
@@ -74,7 +71,6 @@ function LoginPage(props) {
                         label="Email"
                         variant="outlined"
                         inputRef={refEmail}
-                        value={email}
                     />
                 </div>
 

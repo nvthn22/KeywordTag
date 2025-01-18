@@ -12,35 +12,45 @@ namespace KeywordTag.ApiService.Business.Controllers
     {
         private readonly ILogger<KeywordController> _logger;
         private readonly CheckinAction _checkinAction;
-        private readonly GetKeywordAction _getKeywordAction;
-        private readonly GetTopKeywordAction _getTopKeywordAction;
+        private readonly AddKeywordAction _addKeywordAction;
+        private readonly GetTopKeywordsAction _getTopKeywordAction;
+        private readonly GetUserKeywordsAction _getUserKeywordsAction;
         private readonly TagAction _tagAction;
 
         public KeywordController(
-            GetKeywordAction getKeywordAction,
+            AddKeywordAction addKeywordAction,
             CheckinAction checkinAction,
             TagAction tagAction,
-            GetTopKeywordAction getTopKeywordAction,
+            GetTopKeywordsAction getTopKeywordAction,
+            GetUserKeywordsAction getUserKeywordsAction,
             ILogger<KeywordController> logger)
         {
-            _getKeywordAction = getKeywordAction;
+            _addKeywordAction = addKeywordAction;
             _checkinAction = checkinAction;
             _getTopKeywordAction = getTopKeywordAction;
+            _getUserKeywordsAction = getUserKeywordsAction;
             _tagAction = tagAction;
             _logger = logger;
         }
 
-        [HttpGet("gettopkeyword")]
-        public ActionResult<WrapResult> GetTopKeyword()
+        [HttpGet("gettopkeywords")]
+        public ActionResult<WrapResult> GetTopKeywords()
         {
-            var result = _getTopKeywordAction.GetKeyword();
+            var result = _getTopKeywordAction.GetKeywords();
             return result;
         }
 
-        [HttpPost("getkeyword")]
-        public ActionResult<WrapResult> GetKeyword([FromBody] GetKeywordInput input)
+        [HttpPost("addkeyword")]
+        public ActionResult<WrapResult> AddKeyword([FromBody] AddKeywordInput input)
         {
-            var result = _getKeywordAction.GetKeyword(input);
+            var result = _addKeywordAction.AddKeyword(input);
+            return result;
+        }
+
+        [HttpPost("getuserkeywords")]
+        public ActionResult<WrapResult> GetUserKeywords([FromBody] GetUserKeywordsInput input)
+        {
+            var result = _getUserKeywordsAction.GetUserKeywords(input);
             return result;
         }
 

@@ -28,6 +28,7 @@ namespace KeywordTag.ApiService.Business.Services.KeywordService.Checkin
 
                 checkin.checkintime = DateTime.UtcNow;
                 KeywordTagDB.Checkins.Add(checkin);
+                KeywordTagDB.SaveChanges();
             }
 
             var last10Minutes = DateTime.UtcNow.AddMinutes(-10);

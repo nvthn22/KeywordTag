@@ -39,6 +39,7 @@ namespace KeywordTag.ApiService.Business.Services.KeywordService.Tag
                 };
 
                 KeywordTagDB.Tags.Add(tag);
+                KeywordTagDB.SaveChanges();
             }
 
             return new WrapResult(true);

@@ -18,13 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="SeedDatabase\Views\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="SeedDatabase\Views\TopKeywordViewId.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <Folder Include="Views\" />
   </ItemGroup>
 
 </Project>

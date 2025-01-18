@@ -1,44 +1,34 @@
-﻿using KeywordTag.ApiService.Business.Exceptions;
-using KeywordTag.ApiService.Business.Services.MessageService.GetMessages;
+﻿using KeywordTag.ApiService.Business.Services.MessageService.GetMessages;
 using KeywordTag.ApiService.Business.ShareModels.Output;
 using KeywordTag.Database.SQLServer.Contexts;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 
 namespace KeywordTag.ApiService.Business.Services.KeywordService.GetKeyword
 {
-    public class GetTopKeywordAction
+    public class GetTopKeywordsAction
     {
         private readonly ILogger<GetMessagesAction> _logger;
         private readonly KeywordTagContext KeywordTagDB;
 
-        public GetTopKeywordAction(ILogger<GetMessagesAction> logger, KeywordTagContext keywordTagDB)
+        public GetTopKeywordsAction(ILogger<GetMessagesAction> logger, KeywordTagContext keywordTagDB)
         {
             _logger = logger;
             KeywordTagDB = keywordTagDB;
         }
 
-        public WrapResult GetKeyword()
+        public WrapResult GetKeywords()
         {
-            var topKeyword = KeywordTagDB.TopKeywordIdView.FirstOrDefault();
-            if (topKeyword == null)
+            var quantity = new SqlParameter("@Quantity", 1);
+            var keywordsQuery = KeywordTagDB.KeywordViews.FromSqlRaw("EXEC kt.GetTopKeywords @Quantity", quantity).ToList();
+            var keywords = keywordsQuery.Select(k => new KeywordOutput
             {
-                var nodata = new WrapResult()
-                {
-                    Code = System.Net.HttpStatusCode.NotFound,
-                    Message = KeywordExMessages.NoTopKeyword,
-                };
-                return nodata;
-            }
+                code = k.code,
+                name = k.name,
+                online = k.online,
+            });
 
-            var keyword = KeywordTagDB.Keywords.First(x => x.code == topKeyword.Code);
-
-            var result = new KeywordOutput
-            {
-                code = keyword.code,
-                name = keyword.name,
-                online = topKeyword.Count,
-            };
-
-            return new WrapResult(result);
+            return new WrapResult(keywords);
         }
     }
 }

@@ -7,23 +7,35 @@ import styles from './KeywordPage.module.scss'
 import MessageFilter from '../../components/MessageFilter/MessageFilter'
 
 import GetMessages from '../../api/message/GetMessages.api'
-import GetTopKeyword from '../../api/keyword/GetTopKeyword.api'
+import GetTopKeywords from '../../api/keyword/GetTopKeywords.api'
+import GetUserKeywords from '../../api/keyword/GetUserKeywords.api'
 
 import { useDispatch, useSelector } from 'react-redux'
 import {
     updateTopKeyword,
     updateListMessage,
     updateMyKeywords
-} from '../../stores/slices/AppSlide'
+} from '../../stores/slices/AppSlice'
 
 function KeywordPage(props) {
     const dispatch = useDispatch();
 
+    const topKeywords = useSelector(state => state.app.keyword.top);
+    const userKeywordIds = useSelector(state => {
+        return state.app.user.listKeywords
+    });
+    const messages = useSelector(state => state.app.message.list);
+    const myKeywords = useSelector(state => state.app.keyword.list);
+
+    const test = useSelector(state => {
+        return state.app.test
+    });
+
     // Tải top keyword
     function onRefreshClick($event) {
-        GetTopKeyword().then((response) => {
+        GetTopKeywords().then((response) => {
             if (response.data.code === 200) {
-                var keywords = [response.data.value]
+                var keywords = response.data.value
                 dispatch(updateTopKeyword(keywords))
             }
         });
@@ -45,41 +57,17 @@ function KeywordPage(props) {
 
     // Tải keyword của người dùng
     useEffect(() => {
+        var model = {
+            keywordIds: userKeywordIds
+        }
 
-        const messages = [{
-            code: "1",
-            name: "abc 1",
-            online: 1,
-        }, {
-            code: "2",
-            name: "abc 2",
-            online: 1,
-        }, {
-            code: "3",
-            name: "abc 3",
-            online: 2,
-        },]
-        dispatch(updateMyKeywords(messages));
-    }, [])
-
-    const defaultKeyword = {
-        code: "0",
-        name: "abc0",
-        online: "10",
-    }
-    const topKeywords = useSelector(state => {
-        return state.app.keyword.top
-    });
-    const test = useSelector(state => {
-        return state.app.test
-    });
-    const messages = useSelector(state => {
-        return state.app.message.list
-    });
-
-    const myKeywords = useSelector(state => {
-        return state.app.keyword.list
-    });
+        GetUserKeywords(model).then((response) => {
+            if (response.data.code === 200) {
+                var userKeywords = response.data.value.keywords
+                dispatch(updateMyKeywords(userKeywords));
+            }
+        });
+    }, [userKeywordIds])
 
     return (
         <Stack direction="row" spacing={1} className={styles["container"]}>
