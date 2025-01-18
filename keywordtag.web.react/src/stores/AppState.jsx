@@ -9,8 +9,8 @@ const AppState = {
     keyword: {
         top: [],
         input: "",
-        selected: null,
-        checkin: null,
+        selectedId: "",
+        checkinId: "",
         list: [],
     },
     message: {

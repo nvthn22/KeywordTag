@@ -2,7 +2,7 @@
 {
     public class CheckinInput
     {
-        public Guid DeviceId { get; set; }
+        public Guid Id { get; set; }
         public Guid KeywordId { get; set; }
     }
 }

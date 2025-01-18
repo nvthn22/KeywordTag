@@ -11,6 +11,23 @@ const appSlice = createSlice({
         updateMyKeywords: (state, action) => {
             state.keyword.list = action.payload;
         },
+        updateCheckinOnline: (state, action) => {
+            var oldTicket = state.keyword.list.filter(x => x.code === action.payload.oldCode);
+            if (oldTicket.length > 0) {
+                oldTicket[0].online = oldTicket[0].online - 1;
+            }
+
+            var newTicket = state.keyword.list.filter(x => x.code === action.payload.newCode);
+            if (newTicket.length > 0) {
+                newTicket[0].online = action.payload.online;
+            }
+        },
+        updateCheckinId: (state, action) => {
+            state.keyword.checkinId = action.payload;
+        },
+        updateKeywordSelected: (state, action) => {
+            state.keyword.selectedId = action.payload;
+        },
 
         updateListMessage: (state, action) => {
             state.message.list = action.payload;
@@ -36,6 +53,9 @@ const appSlice = createSlice({
 export const {
     updateTopKeyword,
     updateMyKeywords,
+    updateCheckinId,
+    updateKeywordSelected,
+    updateCheckinOnline,
 
     updateListMessage,
 

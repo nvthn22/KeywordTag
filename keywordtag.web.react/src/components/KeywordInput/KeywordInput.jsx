@@ -40,6 +40,7 @@ function KeywordInput(props) {
                 if (response.data.code === 200) {
                     var newKeywordIds = response.data.value.keywordIds;
                     dispatch(updateUserListKeywords(newKeywordIds));
+                    setKeyword("")
                 }
             });
         }
